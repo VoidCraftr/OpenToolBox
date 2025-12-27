@@ -6,6 +6,7 @@ import { Copy, Trash2, ShieldCheck, Minimize, Maximize } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function JsonFormatterPage() {
@@ -104,21 +105,30 @@ export default function JsonFormatterPage() {
                 </Alert>
             )}
 
-            <div className="prose dark:prose-invert max-w-none mt-10">
-                <h2>How to use this JSON Formatter?</h2>
-                <p>
-                    Paste your JSON code into the input field on the left. Click "Format" to beautify the JSON with proper indentation, or "Minify" to remove all whitespace for a compact result.
-                </p>
-                <h3>Why use a JSON Formatter?</h3>
-                <ul>
-                    <li><strong>Readability:</strong> Makes complex JSON structures easy to read and understand.</li>
-                    <li><strong>Debugging:</strong> Helps identify syntax errors in your JSON data.</li>
-                    <li><strong>Validation:</strong> Ensures your JSON is RFC 8259 compliant.</li>
-                </ul>
-                <p>
-                    This tool processes your data entirely in your browser. No data is sent to any server, ensuring your privacy and security.
-                </p>
-            </div>
+            <ContentSection
+                title="JSON Formatter & Validator Guide"
+                description={`JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate.\n\nOur JSON Formatter helps developers debug, validate, and prettify JSON data instantly throughout their workflow. Since all processing happens locally in your browser, even sensitive data remains secure.`}
+                features={[
+                    "RFC 8259 Compliant Validation",
+                    "Local Client-Side Processing",
+                    "Minification for Payload Optimization",
+                    "Syntax Error Highlighting"
+                ]}
+                faq={[
+                    {
+                        question: "Is my data sent to a server?",
+                        answer: "No. All processing is performed client-side using JavaScript. Your data never leaves your browser."
+                    },
+                    {
+                        question: "Why is my JSON invalid?",
+                        answer: "Common issues include trailing commas, missing quotes around keys, or using single quotes instead of double quotes. Our tool highlights the exact position of the syntax error."
+                    },
+                    {
+                        question: "What is the difference between formatting and minifying?",
+                        answer: "Formatting adds whitespace and indentation to make the JSON readable for humans. Minifying removes all unnecessary whitespace to reduce the file size for transmission."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

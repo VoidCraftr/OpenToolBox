@@ -7,6 +7,7 @@ import { AlertCircle, CheckCircle2 } from "lucide-react"
 import { Textarea } from "@/components/ui/textarea"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function JwtDecoderPage() {
     const [token, setToken] = useState("")
@@ -82,6 +83,27 @@ export default function JwtDecoderPage() {
                     </div>
                 </div>
             </div>
+
+            <ContentSection
+                title="JWT Decoder Guide"
+                description={`Decode and inspect JSON Web Tokens (JWTs) without sending them to a server. \n\nJWTs are used for securely transmitting information between parties as a JSON object. They are commonly used for authorization (logging in) and information exchange.`}
+                features={[
+                    "Client-Side Only (Secure)",
+                    "Header & Payload Decoding",
+                    "Validity Syntax Check",
+                    "Standard RFC 7519 Compliant"
+                ]}
+                faq={[
+                    {
+                        question: "Is it safe to paste my production tokens?",
+                        answer: "Yes. This tool runs 100% in your browser. Your local tokens never leave your device."
+                    },
+                    {
+                        question: "Can I verify the signature?",
+                        answer: "No. To verify a signature, you would need the secret key, which you should NEVER paste into a public tool. We only decode the readable parts (Header/Payload)."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

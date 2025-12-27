@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function WordCounterPage() {
     const [text, setText] = useState("")
@@ -94,16 +95,30 @@ export default function WordCounterPage() {
                 </div>
             </div>
 
-            <div className="prose dark:prose-invert max-w-none mt-10">
-                <h2>About this Word Counter</h2>
-                <p>
-                    An essential tool for writers, students, and SEO professionals. Get instant statistics about your text structure.
-                </p>
-                <h3>How is reading time calculated?</h3>
-                <p>
-                    We estimate reading time based on an average reading speed of 200 words per minute.
-                </p>
-            </div>
+            <ContentSection
+                title="Word & Character Counter Guide"
+                description={`A real-time text analysis tool for writers, students, and SEO professionals. \n\nInstantly calculate word count, character count, sentence count, and estimated reading time. Perfect for checking essay lengths, social media post limits (Twitter/X, LinkedIn), or blog post optimization.`}
+                features={[
+                    "Real-time Counting",
+                    "Reading Time Estimation",
+                    "Paragraph & Sentence Analysis",
+                    "Case Conversion (Upper/Lower/Title)"
+                ]}
+                faq={[
+                    {
+                        question: "How is reading time calculated?",
+                        answer: "We assume an average reading speed of 200 words per minute (WPM), which is standard for most adults reading English text."
+                    },
+                    {
+                        question: "Does it count spaces?",
+                        answer: "The 'Characters' count includes spaces. If you need a count without spaces, you can use our advanced text analysis tools."
+                    },
+                    {
+                        question: "Is my text saved?",
+                        answer: "No. All analysis happens instantly in your browser's memory. Your text is cleared when you refresh the page."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

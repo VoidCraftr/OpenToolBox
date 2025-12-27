@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function UuidGeneratorPage() {
     const [count, setCount] = useState([10])
@@ -58,6 +59,31 @@ export default function UuidGeneratorPage() {
                     </Button>
                 </div>
             </div>
+
+            <ContentSection
+                title="UUID Generator Guide"
+                description={`Generate universally unique identifiers (UUIDs) compatible with RFC 4122. \n\nUUIDs (Universally Unique Identifiers) are 128-bit numbers used to uniquely identify information in computer systems. Version 4 UUIDs are generated using random numbers.`}
+                features={[
+                    "Bulk Generation (Up to 100)",
+                    "RFC 4122 Compliant (v4)",
+                    "Cryptographically Secure",
+                    "One-Click Copy"
+                ]}
+                faq={[
+                    {
+                        question: "What is a Version 4 UUID?",
+                        answer: "Version 4 UUIDs are generated using random or pseudo-random numbers. They are the most common type of UUID used in modern applications."
+                    },
+                    {
+                        question: "Can UUIDs collide?",
+                        answer: "Theoretically yes, but the probability is astronomically low. You would need to generate trillions of UUIDs per second for years to have even a 50% chance of a single collision."
+                    },
+                    {
+                        question: "Can I use these for database Primary Keys?",
+                        answer: "Yes, UUIDs are excellent for primary keys in distributed systems because they can be generated without a central authority."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

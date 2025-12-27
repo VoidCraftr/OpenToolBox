@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 function formatTime(ms: number) {
     const minutes = Math.floor(ms / 60000)
@@ -164,6 +165,27 @@ export default function StopwatchPage() {
                     </div>
                 </TabsContent>
             </Tabs>
+
+            <ContentSection
+                title="Online Stopwatch & Timer"
+                description={`A simple, accurate stopwatch and countdown timer for your browser. \n\nPerfect for tracking workouts, cooking, productivity sprints (Pomodoro), or any time-sensitive task.`}
+                features={[
+                    "Milliseconds Precision",
+                    "Lap Time Tracking",
+                    "Countdown Timer with Presets",
+                    "Browser-Based (No Install)"
+                ]}
+                faq={[
+                    {
+                        question: "Will it work if I switch tabs?",
+                        answer: "Yes, modern browsers optimize background tabs, but our timer logic compensates for drift to keep time accurate."
+                    },
+                    {
+                        question: "Does it have an alarm?",
+                        answer: "Currently, it shows a visual indicator when the timer reaches zero. Audio alerts are coming in the next update."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

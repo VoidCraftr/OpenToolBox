@@ -15,6 +15,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function DiffViewerPage() {
     const [oldText, setOldText] = useState("")
@@ -87,6 +88,27 @@ export default function DiffViewerPage() {
                     </div>
                 )}
             </div>
+
+            <ContentSection
+                title="Text Diff Viewer Guide"
+                description={`Compare two text files or code snippets to find differences. \n\nOur Diff Viewer highlights additions, deletions, and changes in real-time. It supports character-level, word-level, and line-level comparison modes.`}
+                features={[
+                    "Three Comparison Modes (Char, Word, Line)",
+                    "Color-Coded Highlights",
+                    "Side-by-Side Logic",
+                    "Works with Code and Plain Text"
+                ]}
+                faq={[
+                    {
+                        question: "Which mode should I use?",
+                        answer: "Use 'Lines' for code comparison, 'Words' for articles/essays, and 'Characters' for fixing typos or small strings."
+                    },
+                    {
+                        question: "Is my code safe?",
+                        answer: "Yes. The diff calculation happens entirely in your browser using JavaScript. No code is sent to our servers."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

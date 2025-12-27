@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { Card } from "@/components/ui/card"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function BoxShadowGeneratorPage() {
     const [hOffset, setHOffset] = useState([10])
@@ -93,6 +94,27 @@ export default function BoxShadowGeneratorPage() {
                     </div>
                 </div>
             </div>
+
+            <ContentSection
+                title="CSS Box Shadow Guide"
+                description={`Visually design complex CSS box-shadows without writing code. \n\nThe \`box-shadow\` property adds shadow effects around an element's frame. You can set multiple effects separated by commas. A box shadow is described by X and Y offsets relative to the element, blur and spread radius, and color.`}
+                features={[
+                    "Interactive Visual Editor",
+                    "Inset & Outset Support",
+                    "One-Click CSS Copy",
+                    "RBA Color Support with Opacity"
+                ]}
+                faq={[
+                    {
+                        question: "What is the difference between specific properties?",
+                        answer: "`Offset-x` moves the shadow horizontally, `offset-y` moves it vertically. `Blur` creates a soft edge, while `Spread` changes the size of the shadow."
+                    },
+                    {
+                        question: "Does this support cross-browser compatibility?",
+                        answer: "Yes, standard `box-shadow` is supported by all modern browsers (Chrome, Firefox, Safari, Edge). Older Webkit prefixes are rarely needed today."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

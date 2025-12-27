@@ -25,16 +25,8 @@ export function ToolWrapper({
 
             <Separator />
 
-            <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
-                <div className="min-w-0 space-y-6">
-                    {children}
-                </div>
-
-                <aside className="hidden space-y-6 lg:block">
-                    <div className="sticky top-20">
-                        <AdBanner slot="sidebar-ad" className="min-h-[600px]" />
-                    </div>
-                </aside>
+            <div className="min-w-0 space-y-6">
+                {children}
             </div>
 
             <div className="mt-12">

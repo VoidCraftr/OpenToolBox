@@ -14,6 +14,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function SqlFormatterPage() {
     const [input, setInput] = useState("")
@@ -82,6 +83,27 @@ export default function SqlFormatterPage() {
                     <Play className="mr-2 h-4 w-4" /> Format SQL
                 </Button>
             </div>
+
+            <ContentSection
+                title="SQL Formatter Guide"
+                description={`Clean up messy SQL queries instantly. \n\nConsistent formatting makes SQL easier to read, debug, and maintain. Our tool handles various dialects including MySQL, PostgreSQL, and SQLite.`}
+                features={[
+                    "Support for Multiple Dialects",
+                    "Standard 2-Space Indentation",
+                    "Syntax Error Detection",
+                    "One-Click Copy Output"
+                ]}
+                faq={[
+                    {
+                        question: "Why format SQL?",
+                        answer: "Clean code reduces bugs. Properly indented nested queries are much easier to understand than single-line spaghetti code."
+                    },
+                    {
+                        question: "Does it execute the SQL?",
+                        answer: "No. This is purely a text processing tool. It does not connect to any database or execute any commands."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

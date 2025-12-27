@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function KeycodeInfoPage() {
     const [event, setEvent] = useState<KeyboardEvent | null>(null)
@@ -73,6 +74,27 @@ export default function KeycodeInfoPage() {
                     </div>
                 </div>
             </div>
+
+            <ContentSection
+                title="JavaScript Keycode Guide"
+                description={`Get instant information about any key pressed on your keyboard. \n\nUseful for web developers debugging keyboard shortcuts, game controls, or accessibility features. We provide the deprecated \`keyCode\` property as well as the modern \`key\` and \`code\` standards.`}
+                features={[
+                    "Real-time Event Capture",
+                    "Shows Deprecated & Modern Properties",
+                    "Status of Control Keys (Ctrl, Shift, Alt)",
+                    "Location Property Detection"
+                ]}
+                faq={[
+                    {
+                        question: "Why are there so many properties?",
+                        answer: "JavaScript has evolved over time. \`keyCode\` is deprecated but still used in older codebases. \`key\` represents the character value, while \`code\` represents the physical key position."
+                    },
+                    {
+                        question: "What is 'event.location'?",
+                        answer: "It indicates where the key is located on the keyboard (e.g., Left Shift vs Right Shift, Numpad keys vs Standard keys)."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

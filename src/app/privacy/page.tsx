@@ -1,54 +1,85 @@
+import { Separator } from "@/components/ui/separator"
+import { Shield, Lock, Eye, Server } from "lucide-react"
+
 export const metadata = {
-    title: "Privacy Policy - Nexus Tools",
-    description: "Privacy Policy for Nexus Tools.",
+    title: "Privacy Policy - OpenToolbox",
+    description: "Our commitment to your privacy and data security.",
 }
 
 export default function PrivacyPage() {
     return (
-        <div className="mx-auto max-w-3xl py-8">
-            <div className="prose dark:prose-invert max-w-none">
-                <h1>Privacy Policy</h1>
-                <p className="lead">Last updated: {new Date().toLocaleDateString()}</p>
+        <div className="mx-auto max-w-3xl py-12 space-y-12">
+            {/* Header */}
+            <div className="text-center space-y-4">
+                <h1 className="text-4xl font-extrabold tracking-tight">Privacy Policy</h1>
+                <p className="text-lg text-muted-foreground">
+                    Last updated: December 2025
+                </p>
+            </div>
 
+            {/* TL;DR Box */}
+            <div className="rounded-xl border-2 border-blue-100 bg-blue-50/50 dark:bg-blue-950/20 dark:border-blue-900/50 p-6 space-y-4">
+                <div className="flex items-center gap-3">
+                    <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    <h2 className="text-xl font-bold text-blue-900 dark:text-blue-100">TL;DR Summary</h2>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2 text-sm text-blue-800 dark:text-blue-200">
+                    <div className="flex items-start gap-2">
+                        <Lock className="h-4 w-4 mt-0.5 opacity-70" />
+                        <span>All processing happens in your browser.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                        <Eye className="h-4 w-4 mt-0.5 opacity-70" />
+                        <span>We do not track your personal inputs.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                        <Server className="h-4 w-4 mt-0.5 opacity-70" />
+                        <span>We do not sell your data.</span>
+                    </div>
+                </div>
+            </div>
+
+            <Separator />
+
+            {/* Content */}
+            <div className="prose prose-slate dark:prose-invert max-w-none">
+                <h3>1. Introduction</h3>
                 <p>
-                    At Nexus Tools, accessible from https://nexus-tools.com, one of our main priorities is the privacy of our visitors.
-                    This Privacy Policy document contains types of information that is collected and recorded by Nexus Tools and how we use it.
+                    OpenToolbox ("we", "us", or "our") operates the OpenToolbox website. We respect your privacy and are committed to protecting it through our compliance with this policy.
                 </p>
 
-                <h2>Consent</h2>
-                <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
-
-                <h2>Information We Collect</h2>
+                <h3>2. Information We Collect</h3>
                 <p>
-                    Nexus Tools operates primarily as a client-side application. This means:
+                    Because OpenToolbox is a client-side first application, we collect minimal data:
                 </p>
                 <ul>
-                    <li><strong>Input Data:</strong> When you use tools like JSON Formatter or Image Converter, your data (code, images, files) is processed locally in your browser. We do NOT upload this data to our servers.</li>
-                    <li><strong>Logs:</strong> Like any other website, we collect standard log files including IP addresses, browser type, ISP, date/time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable.</li>
+                    <li><strong>Usage Data:</strong> We may use privacy-friendly analytics (like Vercel Analytics) to understand which tools are popular. This data is anonymized.</li>
+                    <li><strong>No Input Data:</strong> The images you convert, the JSON you format, and the passwords you generate <strong>never leave your device</strong>. They are processed entirely within your browser's memory.</li>
                 </ul>
 
-                <h2>Cookies and Web Beacons</h2>
+                <h3>3. Cookies</h3>
                 <p>
-                    Nexus Tools uses 'cookies' to store information including visitors' preferences and the pages on the website that the visitor accessed or visited.
-                    The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
+                    We use local storage (localStorage) to save your preferences, such as:
                 </p>
+                <ul>
+                    <li>Dark/Light mode preference</li>
+                    <li>Sidebar collapse state</li>
+                    <li>"Pro" simulation toggle</li>
+                </ul>
+                <p>These are strictly necessary for the site to function as you expect.</p>
 
-                <h2>Google DoubleClick DART Cookie</h2>
+                <h3>4. Third-Party Services</h3>
                 <p>
-                    Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to www.website.com and other sites on the internet.
-                    However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a>
+                    We may use third-party services for specific non-critical functions:
                 </p>
+                <ul>
+                    <li><strong>GitHub:</strong> For hosting our open-source code.</li>
+                    <li><strong>Vercel:</strong> For hosting the website infrastructure.</li>
+                </ul>
 
-                <h2>Advertising Partners Privacy Policies</h2>
+                <h3>5. Contact Us</h3>
                 <p>
-                    You may consult this list to find the Privacy Policy for each of the advertising partners of Nexus Tools.
-                </p>
-                <p>
-                    Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Nexus Tools, which are sent directly to users' browser.
-                    They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.
-                </p>
-                <p>
-                    Note that Nexus Tools has no access to or control over these cookies that are used by third-party advertisers.
+                    If you have any questions about this Privacy Policy, please contact us at <a href="mailto:hello@voidcraftr.com">hello@voidcraftr.com</a>.
                 </p>
             </div>
         </div>

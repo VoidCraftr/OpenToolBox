@@ -14,6 +14,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function ImageConverterPage() {
     const [file, setFile] = useState<File | null>(null)
@@ -145,18 +146,30 @@ export default function ImageConverterPage() {
                 </div>
             </div>
 
-            <div className="prose dark:prose-invert max-w-none mt-10">
-                <h2>About Image Converter</h2>
-                <p>
-                    Easily convert your images to different formats (PNG, JPG, WebP) directly in your browser.
-                </p>
-                <h3>Features</h3>
-                <ul>
-                    <li><strong>Privacy First:</strong> Your images are processed locally and never uploaded to a server.</li>
-                    <li><strong>Fast:</strong> Uses your browser's built-in canvas capabilities for instant conversion.</li>
-                    <li><strong>Free:</strong> Unlimited conversions with no watermarks.</li>
-                </ul>
-            </div>
+            <ContentSection
+                title="Image Converter Guide"
+                description={`Convert images instantly in your browser without uploading files to any server. \n\nOur tool uses advanced HTML5 Canvas technology to read, process, and convert your images locally. This ensures 100% privacy and lightning-fast speeds compared to traditional server-side converters.`}
+                features={[
+                    "Supports PNG, JPEG, and WebP",
+                    "Zero Server Uploads (Privacy Focused)",
+                    "No File Size Limits",
+                    "Instant Browser-based Conversion"
+                ]}
+                faq={[
+                    {
+                        question: "Does this tool support transparent PNGs?",
+                        answer: "Yes! If you convert to PNG or WebP, transparency is preserved. Converting to JPEG will replace transparent areas with a white background."
+                    },
+                    {
+                        question: "Why convert to WebP?",
+                        answer: "WebP images are typically 25-34% smaller than comparable JPEG and PNG images, making your website load faster."
+                    },
+                    {
+                        question: "Is there a daily limit?",
+                        answer: "No. Since the conversion happens on your own device, there are no artificial limits. Convert as many images as you need."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

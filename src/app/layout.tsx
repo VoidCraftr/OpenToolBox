@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Navbar } from "@/components/common/Navbar";
-import { Footer } from "@/components/common/Footer";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
-import { AppSidebar } from "@/components/layout/AppSidebar";
+import { Shell } from "@/components/layout/Shell";
 import { CommandMenu } from "@/components/common/CommandMenu";
 import { AuthProvider } from "@/components/premium/AuthProvider";
 import "./globals.css";
@@ -19,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Nexus Tools - Developer Utilities",
-  description: "Free, fast, and secure developer tools including JSON formatters, image converters, and more.",
+  title: "OpenToolbox - Free Developer Tools",
+  description: "Free, open-source, and secure developer tools. privacy-focused and fast.",
 };
 
 export default function RootLayout({
@@ -41,17 +39,9 @@ export default function RootLayout({
         >
           <AuthProvider>
             <CommandMenu />
-            <div className="relative flex min-h-screen">
-              {/* Desktop Sidebar */}
-              <AppSidebar />
-
-              {/* Main Content Area */}
-              <div className="flex-1 flex flex-col md:pl-64 lg:pl-72 transition-all duration-300">
-                <Navbar />
-                <main className="flex-1 container py-6 max-w-7xl mx-auto">{children}</main>
-                <Footer />
-              </div>
-            </div>
+            <Shell>
+              {children}
+            </Shell>
           </AuthProvider>
         </ThemeProvider>
       </body>

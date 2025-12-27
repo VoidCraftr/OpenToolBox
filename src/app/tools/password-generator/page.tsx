@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function PasswordGeneratorPage() {
     const [password, setPassword] = useState("")
@@ -149,19 +150,30 @@ export default function PasswordGeneratorPage() {
                 </div>
             </div>
 
-            <div className="prose dark:prose-invert max-w-none mt-10">
-                <h2>Why use a Random Password Generator?</h2>
-                <p>
-                    Using strong, unique passwords for every account is the most effective way to protect your online security.
-                    Weak passwords like "123456" or "password" are instantly cracked by hackers.
-                </p>
-                <h3>Tips for Secure Passwords</h3>
-                <ul>
-                    <li><strong>Length is key:</strong> Aim for at least 12 characters. Each additional character exponentially increases complexity.</li>
-                    <li><strong>Mix it up:</strong> Use a combination of uppercase, lowercase, numbers, and symbols.</li>
-                    <li><strong>Don't reuse:</strong> Never use the same password for your email and your banking.</li>
-                </ul>
-            </div>
+            <ContentSection
+                title="Password Generator Guide"
+                description={`Generate strong, random passwords to protect your online accounts. \n\nSecurity experts recommend using passwords that are at least 12 characters long and include a mix of uppercase letters, lowercase letters, numbers, and symbols.`}
+                features={[
+                    "Client-Side Generation (Secure)",
+                    "Customizable Character Sets",
+                    "Password Strength Indicator",
+                    "One-Click Copy"
+                ]}
+                faq={[
+                    {
+                        question: "Are these passwords stored?",
+                        answer: "No. The passwords are generated locally in your browser using the JavaScript Crypto API. We never see or store your passwords."
+                    },
+                    {
+                        question: "Why do I need symbols?",
+                        answer: "Symbols increase the entropy (randomness) of your password, making it exponentially harder for brute-force algorithms to guess."
+                    },
+                    {
+                        question: "How long should my password be?",
+                        answer: "We recommend at least 16 characters for critical accounts like email and banking, and 12 characters for other services."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

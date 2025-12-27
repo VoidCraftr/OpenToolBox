@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { Card } from "@/components/ui/card"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function QrCodeGeneratorPage() {
     const [url, setUrl] = useState("https://voidcraftr.com")
@@ -92,19 +93,30 @@ export default function QrCodeGeneratorPage() {
                 </div>
             </div>
 
-            <div className="prose dark:prose-invert max-w-none mt-10">
-                <h2>About QR Code Generator</h2>
-                <p>
-                    Quick Response (QR) codes are two-dimensional barcodes that can store URLS, text, and other data.
-                    They are widely used for sharing links, Wi-Fi passwords, and contact information.
-                </p>
-                <h3>Features</h3>
-                <ul>
-                    <li><strong>High Quality:</strong> Generate codes up to 1024px for print.</li>
-                    <li><strong>Custom Colors:</strong> Match your brand identity.</li>
-                    <li><strong>Privacy:</strong> Generation happens entirely in your browser.</li>
-                </ul>
-            </div>
+            <ContentSection
+                title="QR Code Generator Guide"
+                description={`Create customizable, high-resolution QR codes for websites, WiFi networks, vCards, and more. \n\nQR (Quick Response) codes are 2D barcodes that can be scanned by any smartphone camera to instantly access information. Our tool runs locally, ensuring your private data (like WiFi passwords) is never sent to a server.`}
+                features={[
+                    "High-Resolution PNG Download",
+                    "Custom Background & Foreground Colors",
+                    "Adjustable Size (Up to 1024px)",
+                    "Error Correction Level H (High)"
+                ]}
+                faq={[
+                    {
+                        question: "Do these QR codes expire?",
+                        answer: "No. These are static QR codes. Once generated, they will work forever as long as the link or data they point to remains valid."
+                    },
+                    {
+                        question: "Can I use these for commercial print?",
+                        answer: "Absolutely. You can download the high-quality PNG and use it on flyers, business cards, or merchandise without attribution."
+                    },
+                    {
+                        question: "Why is the QR code not scanning?",
+                        answer: "Ensure there is enough contrast between the foreground and background colors. Dark foreground on light background is best. Also, ensure the Quiet Zone (margin) is preserved."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

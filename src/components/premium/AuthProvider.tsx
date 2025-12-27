@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return (
         <AuthContext.Provider value={{ isPro, togglePro }}>
             {children}
-            <div className="fixed bottom-4 right-4 z-50">
+            <div className="fixed bottom-4 right-4 z-[100]">
                 <Button
                     onClick={togglePro}
                     variant={isPro ? "default" : "secondary"}

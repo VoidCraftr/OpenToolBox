@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
 
 const RATES: Record<string, number> = {
     // Length (Base: Meter)
@@ -124,6 +125,27 @@ export default function UnitConverterPage() {
                     </Select>
                 </div>
             </div>
+
+            <ContentSection
+                title="Unit Converter Guide"
+                description={`Instantly convert between common units of measurement. \n\nWe support three major categories: Length (Metric/Imperial), Weight (Mass), and Temperature.`}
+                features={[
+                    "Multi-Category Support",
+                    "Real-time Conversion",
+                    "Metric & Imperial Units",
+                    "Accurate Decimal Precision"
+                ]}
+                faq={[
+                    {
+                        question: "Which formula is used for Temperature?",
+                        answer: "C = (F - 32) * 5/9. F = (C * 9/5) + 32. K = C + 273.15."
+                    },
+                    {
+                        question: "How accurate are the conversions?",
+                        answer: "We use standard international conversion factors (e.g., 1 inch = 2.54 cm exactly)."
+                    }
+                ]}
+            />
         </ToolWrapper>
     )
 }

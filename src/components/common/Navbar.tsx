@@ -14,7 +14,7 @@ export function Navbar() {
                     <Link href="/" className="mr-6 flex items-center space-x-2">
                         <Package2 className="h-6 w-6" />
                         <span className="hidden font-bold sm:inline-block">
-                            Nexus Tools
+                            OpenToolbox
                         </span>
                     </Link>
                     <nav className="flex items-center gap-6 text-sm font-medium">
@@ -51,7 +51,7 @@ export function Navbar() {
                     <SheetContent side="left" className="pr-0">
                         <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
                             <Package2 className="h-6 w-6" />
-                            <span className="sr-only">Nexus Tools</span>
+                            <span className="sr-only">OpenToolbox</span>
                         </Link>
                         <nav className="mt-8 flex flex-col gap-4">
                             <Link href="/" className="font-medium text-muted-foreground hover:text-foreground">

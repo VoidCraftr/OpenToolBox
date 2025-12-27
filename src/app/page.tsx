@@ -15,11 +15,11 @@ export default function Home() {
       {/* Hero Section */}
       <section className="text-center space-y-4 pt-8 lg:pt-16">
         <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-          The All-in-One <br className="hidden sm:inline" />
+          The Open Source <br className="hidden sm:inline" />
           <span className="text-primary">Developer Toolbox</span>
         </h1>
         <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-          A collection of free, fast, and secure tools for developers, designers, and creators. No clutter, just utility.
+          A collection of free, privacy-focused open source tools. No bloat, just code.
         </p>
         <div className="flex justify-center gap-4 pt-4">
           <Link href="/tools">

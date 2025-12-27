@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/common/ThemeProvider";
 import { Shell } from "@/components/layout/Shell";
 import { CommandMenu } from "@/components/common/CommandMenu";
 import { AuthProvider } from "@/components/premium/AuthProvider";
+import { MicrosoftClarity } from "@/components/analytics/MicrosoftClarity";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,6 +44,8 @@ export default function RootLayout({
             <Shell>
               {children}
             </Shell>
+            <MicrosoftClarity />
+            <GoogleAnalytics />
           </AuthProvider>
         </ThemeProvider>
       </body>

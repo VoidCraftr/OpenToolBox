@@ -1,0 +1,23 @@
+# OpenToolBox project context for LLMs
+
+title: OpenToolBox
+description: A comprehensive collection of free, open-source, and secure developer tools.
+url: https://tools.voidcraftr.com
+
+# Core Features
+- 100% Client-side processing for privacy
+- Developer Tools: JSON Formatter, SQL Formatter, JWT Decoder, UUID Generator
+- Design Tools: Image Converter, Box Shadow Generator, Gradient Generator
+- Security Tools: Password Generator
+- General Tools: QR Code Generator, Unit Converter
+
+# Tech Stack
+- Framework: Next.js 15 (App Router)
+- Language: TypeScript
+- Styling: Tailwind CSS
+- Components: Shadcn/UI
+- Icons: Lucide React
+
+# Purpose
+To provide a fast, secure, and beautiful alternative to ad-heavy tool sites. 
+We prioritize user experience and privacy above all.

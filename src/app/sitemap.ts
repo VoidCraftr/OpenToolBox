@@ -1,0 +1,23 @@
+import { tools } from '@/config/tools';
+import { MetadataRoute } from 'next';
+
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://tools.voidcraftr.com';
+
+export default function sitemap(): MetadataRoute.Sitemap {
+    const toolUrls = tools.map((tool) => ({
+        url: `${baseUrl}/tools/${tool.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
+    return [
+        {
+            url: baseUrl,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 1,
+        },
+        ...toolUrls,
+    ];
+}

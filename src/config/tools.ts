@@ -35,7 +35,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "json-formatter",
         name: "JSON Formatter",
-        description: "Format, minify, and validate JSON data.",
+        description: "Free Online JSON Formatter, Minifier & Validator.",
         category: "developer",
         icon: Code,
         isPopular: true,
@@ -43,7 +43,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "sql-formatter",
         name: "SQL Formatter",
-        description: "Prettify and standardise SQL queries.",
+        description: "Free Online SQL Formatter & Prettifier for developers.",
         category: "developer",
         icon: Database,
         isNew: true,
@@ -51,7 +51,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "jwt-decoder",
         name: "JWT Decoder",
-        description: "Decode JSON Web Tokens without sending data to a server.",
+        description: "Free Online JWT Decoder. Debug tokens securely in your browser.",
         category: "developer",
         icon: Lock,
         isNew: true,
@@ -59,7 +59,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "uuid-generator",
         name: "UUID Generator",
-        description: "Generate random UUIDs (v4) in bulk.",
+        description: "Free Bulk UUID Generator (v4). Create unique IDs instantly.",
         category: "developer",
         icon: Fingerprint,
         isNew: true,
@@ -67,7 +67,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "cron-generator",
         name: "Cron Generator",
-        description: "Create and explain cron schedules with next run dates preview.",
+        description: "Free Cron Expression Generator with next run preview.",
         category: "developer",
         icon: Clock,
         isNew: true,
@@ -75,7 +75,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "keycode-info",
         name: "Keycode Info",
-        description: "Find JavaScript key codes and event data.",
+        description: "Online Keycode Finder. Get JavaScript event key codes visually.",
         category: "developer",
         icon: Keyboard,
         isNew: true,
@@ -85,7 +85,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "image-converter",
         name: "Image Converter",
-        description: "Convert between JPG, PNG, and WebP formats.",
+        description: "Free Image Converter. Convert JPG, PNG to WebP securely.",
         category: "media",
         icon: FileImage,
         isPopular: true,
@@ -93,7 +93,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "box-shadow-generator",
         name: "Box Shadow Generator",
-        description: "Create beautiful CSS box shadows visually.",
+        description: "Free CSS Box Shadow Generator. Visual design tool for developers.",
         category: "design",
         icon: BoxSelect,
         isNew: true,
@@ -101,7 +101,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "gradient-generator",
         name: "Gradient Generator",
-        description: "Design CSS gradients and copy the code.",
+        description: "Free CSS Gradient Generator. Create beautiful linear & radial gradients.",
         category: "design",
         icon: Palette,
         isNew: true,
@@ -111,7 +111,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "password-generator",
         name: "Password Generator",
-        description: "Create strong, secure passwords.",
+        description: "Free Strong Password Generator. Create secure passwords instantly.",
         category: "security",
         icon: Lock,
         isPopular: true,
@@ -121,14 +121,14 @@ export const tools: ToolMetadata[] = [
     {
         slug: "word-counter",
         name: "Word Counter",
-        description: "Count words, characters, and sentences.",
+        description: "Free Online Word Counter & Character Count Tool.",
         category: "text",
         icon: Type,
     },
     {
         slug: "diff-viewer",
         name: "Diff Viewer",
-        description: "Compare two text blocks and highlight differences.",
+        description: "Free Text Diff Viewer. Compare strings and find differences online.",
         category: "text",
         icon: RefreshCcw,
         isNew: true,
@@ -138,7 +138,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "qr-code-generator",
         name: "QR Code Generator",
-        description: "Create customizable QR codes.",
+        description: "Free QR Code Generator with Logo support. High-quality PNG download.",
         category: "general",
         icon: QrCode,
         isNew: true,
@@ -146,7 +146,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "unit-converter",
         name: "Unit Converter",
-        description: "Convert common units of measurement.",
+        description: "Free Unit Converter. Convert Length, Weight, Temperature with formulas.",
         category: "general",
         icon: Scale,
         isNew: true,
@@ -154,7 +154,7 @@ export const tools: ToolMetadata[] = [
     {
         slug: "stopwatch",
         name: "Stopwatch & Timer",
-        description: "Simple online stopwatch and countdown timer.",
+        description: "Free Online Stopwatch with Laps and Countdown Timer.",
         category: "general",
         icon: Timer,
         isNew: true,

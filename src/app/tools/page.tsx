@@ -10,7 +10,7 @@ import {
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
 
 export const metadata = {
-    title: "All Developer Tools - Nexus Tools",
+    title: "All Developer Tools - OpenToolBox",
     description: "Browse our complete collection of developer utilities.",
 }
 

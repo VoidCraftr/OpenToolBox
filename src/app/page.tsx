@@ -25,7 +25,7 @@ export default function Home() {
           <Link href="/tools">
             <Button size="lg" className="px-8">Explore All Tools</Button>
           </Link>
-          <a href="https://github.com/voidcraftr/nexus-tools" target="_blank" rel="noreferrer">
+          <a href="https://github.com/voidcraftr/OpenToolBox" target="_blank" rel="noreferrer">
             <Button variant="outline" size="lg">
               <Github className="mr-2 h-4 w-4" />
               Star on GitHub

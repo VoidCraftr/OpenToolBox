@@ -7,7 +7,7 @@ import { Mail, Check, Copy, Twitter, Github, Linkedin, Instagram, Facebook } fro
 
 export default function ContactPage() {
     const [copied, setCopied] = useState(false)
-    const email = "hello@voidcraftr.com"
+    const email = "satyam.agarwal.ai@gmail.com"
 
     const copyEmail = () => {
         navigator.clipboard.writeText(email)
@@ -33,7 +33,7 @@ export default function ContactPage() {
                     </p>
 
                     <div className="flex flex-wrap gap-3 pt-4">
-                        <a href="https://twitter.com/voidcraftr" target="_blank" rel="noreferrer">
+                        <a href="https://twitter.com/Satyam_Agarwal_" target="_blank" rel="noreferrer">
                             <Button variant="outline" size="sm" className="gap-2">
                                 <Twitter className="h-4 w-4" /> Twitter
                             </Button>

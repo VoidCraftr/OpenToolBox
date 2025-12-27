@@ -79,7 +79,7 @@ export default function PrivacyPage() {
 
                 <h3>5. Contact Us</h3>
                 <p>
-                    If you have any questions about this Privacy Policy, please contact us at <a href="mailto:hello@voidcraftr.com">hello@voidcraftr.com</a>.
+                    If you have any questions about this Privacy Policy, please contact us at <a href="mailto:satyam.agarwal.ai@gmail.com">satyam.agarwal.ai@gmail.com</a>.
                 </p>
             </div>
         </div>

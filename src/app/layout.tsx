@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OpenToolbox - Free Developer Tools",
-  description: "Free, open-source, and secure developer tools. privacy-focused and fast.",
+  title: "OpenToolBox - Free Online Developer & Security Tools",
+  description: "A comprehensive collection of free, open-source, and secure developer tools. JSON Formatter, Image Converter, Password Generator, and more. 100% Client-side privacy.",
 };
 
 export default function RootLayout({

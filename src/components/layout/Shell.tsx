@@ -68,7 +68,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                             </Button>
                         </Link>
                         <div className="h-4 w-px bg-border mx-2 hidden md:block" />
-                        <a href="https://github.com/voidcraftr/nexus-tools" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground">
+                        <a href="https://github.com/voidcraftr/OpenToolBox" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground">
                             <span className="sr-only">GitHub</span>
                             <Github className="h-5 w-5" />
                         </a>

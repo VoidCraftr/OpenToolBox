@@ -53,7 +53,7 @@ export function constructMetadata({
             images: [image],
             creator: "@voidcraftr",
         },
-        metadataBase: new URL("https://nexus-tools-demo.vercel.app"), // Replace with actual domain when deployed
+        metadataBase: new URL("https://OpenToolBox-demo.vercel.app"), // Replace with actual domain when deployed
         alternates: {
             canonical: canonical,
         },

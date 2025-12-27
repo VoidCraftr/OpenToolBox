@@ -34,16 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return (
         <AuthContext.Provider value={{ isPro, togglePro }}>
             {children}
-            <div className="fixed bottom-4 right-4 z-[100]">
-                <Button
-                    onClick={togglePro}
-                    variant={isPro ? "default" : "secondary"}
-                    className="shadow-lg"
-                >
-                    {isPro ? "Simulate Free User" : "Simulate Pro User"}
-                    {isPro && <Crown className="ml-2 h-4 w-4 text-yellow-300" />}
-                </Button>
-            </div>
+            {null}
         </AuthContext.Provider>
     )
 }

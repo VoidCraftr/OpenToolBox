@@ -42,7 +42,7 @@ export default function PrivacyPage() {
             <Separator />
 
             {/* Content */}
-            <div className="prose prose-slate dark:prose-invert max-w-none">
+            <div className="prose prose-slate dark:prose-invert max-w-none prose-ul:list-disc prose-ul:pl-6 prose-li:marker:text-blue-500">
                 <h3>1. Introduction</h3>
                 <p>
                     OpenToolbox ("we", "us", or "our") operates the OpenToolbox website. We respect your privacy and are committed to protecting it through our compliance with this policy.

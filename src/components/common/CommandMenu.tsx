@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { Calculator, Calendar, CreditCard, Settings, Smile, User } from "lucide-react"
 
 import {
     CommandDialog,
@@ -16,26 +15,34 @@ import {
 } from "@/components/ui/command"
 import { tools, categories } from "@/config/tools"
 
-export function CommandMenu() {
-    const [open, setOpen] = React.useState(false)
+interface CommandMenuProps {
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
+}
+
+export function CommandMenu({ open: externalOpen, onOpenChange: externalOnOpenChange }: CommandMenuProps) {
+    const [internalOpen, setInternalOpen] = React.useState(false)
     const router = useRouter()
+
+    const open = externalOpen ?? internalOpen
+    const setOpen = externalOnOpenChange ?? setInternalOpen
 
     React.useEffect(() => {
         const down = (e: KeyboardEvent) => {
             if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault()
-                setOpen((open) => !open)
+                setOpen(!open)
             }
         }
 
         document.addEventListener("keydown", down)
         return () => document.removeEventListener("keydown", down)
-    }, [])
+    }, [setOpen, open]) // Added open to dependency array
 
     const runCommand = React.useCallback((command: () => unknown) => {
         setOpen(false)
         command()
-    }, [])
+    }, [setOpen])
 
     return (
         <CommandDialog open={open} onOpenChange={setOpen}>

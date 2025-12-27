@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { TimeDisplay } from "@/components/common/TimeDisplay"
 
 export function Footer() {
     return (
@@ -25,9 +26,12 @@ export function Footer() {
                     </Link>
                     .
                 </p>
-                <div className="flex gap-4 text-sm text-muted-foreground">
-                    <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
-                    <Link href="/terms" className="hover:underline">Terms of Service</Link>
+                <div className="flex flex-col md:flex-row items-center gap-4">
+                    <TimeDisplay />
+                    <div className="flex gap-4 text-sm text-muted-foreground">
+                        <Link href="/privacy" className="hover:underline">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:underline">Terms of Service</Link>
+                    </div>
                 </div>
             </div>
         </footer>

@@ -1,0 +1,135 @@
+"use client"
+
+import { useState } from "react"
+import { Copy, Trash2, ShieldCheck, Minimize, Maximize } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { ToolWrapper } from "@/components/tools/ToolWrapper"
+import { ContentSection } from "@/components/tools/ContentSection"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
+export default function JsonFormatterClient() {
+    const [input, setInput] = useState("")
+    const [output, setOutput] = useState("")
+    const [error, setError] = useState<string | null>(null)
+
+    const handleFormat = () => {
+        try {
+            if (!input.trim()) return
+            const parsed = JSON.parse(input)
+            setOutput(JSON.stringify(parsed, null, 2))
+            setError(null)
+        } catch (err) {
+            setError("Invalid JSON: " + (err as Error).message)
+            setOutput("")
+        }
+    }
+
+    const handleMinify = () => {
+        try {
+            if (!input.trim()) return
+            const parsed = JSON.parse(input)
+            setOutput(JSON.stringify(parsed))
+            setError(null)
+        } catch (err) {
+            setError("Invalid JSON: " + (err as Error).message)
+            setOutput("")
+        }
+    }
+
+    const handleClear = () => {
+        setInput("")
+        setOutput("")
+        setError(null)
+    }
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(output)
+    }
+
+    return (
+        <ToolWrapper
+            title="JSON Formatter & Validator"
+            description="Format, prettify, and validate your JSON data. Secure, client-side processing."
+            toolSlug="json-formatter"
+            adSlot="json-tool-slot"
+        >
+            <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-medium">Input JSON</h3>
+                        <Button variant="ghost" size="sm" onClick={handleClear} className="h-8 px-2 text-destructive">
+                            <Trash2 className="mr-2 h-4 w-4" /> Clear
+                        </Button>
+                    </div>
+                    <Textarea
+                        placeholder="Paste your JSON here..."
+                        className="h-[400px] font-mono text-sm"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-medium">Output</h3>
+                        <Button variant="outline" size="sm" onClick={handleCopy} disabled={!output} className="h-8 px-2">
+                            <Copy className="mr-2 h-4 w-4" /> Copy
+                        </Button>
+                    </div>
+                    <Textarea
+                        readOnly
+                        className="h-[400px] font-mono text-sm bg-muted"
+                        value={output}
+                        placeholder="Formatted JSON will appear here..."
+                    />
+                </div>
+            </div>
+
+            <div className="flex flex-wrap gap-4 py-4">
+                <Button onClick={handleFormat}>
+                    <Maximize className="mr-2 h-4 w-4" /> Format / Prettify
+                </Button>
+                <Button onClick={handleMinify} variant="secondary">
+                    <Minimize className="mr-2 h-4 w-4" /> Minify
+                </Button>
+                <Button onClick={handleFormat} variant="outline" className="hidden">
+                    <ShieldCheck className="mr-2 h-4 w-4" /> Validate
+                </Button>
+            </div>
+
+            {error && (
+                <Alert variant="destructive">
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>{error}</AlertDescription>
+                </Alert>
+            )}
+
+            <ContentSection
+                title="JSON Formatter & Validator Guide"
+                description={`JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate.\n\nOur JSON Formatter helps developers debug, validate, and prettify JSON data instantly throughout their workflow. Since all processing happens locally in your browser, even sensitive data remains secure.`}
+                features={[
+                    "RFC 8259 Compliant Validation",
+                    "Local Client-Side Processing",
+                    "Minification for Payload Optimization",
+                    "Syntax Error Highlighting"
+                ]}
+                faq={[
+                    {
+                        question: "Is my data sent to a server?",
+                        answer: "No. All processing is performed client-side using JavaScript. Your data never leaves your browser."
+                    },
+                    {
+                        question: "Why is my JSON invalid?",
+                        answer: "Common issues include trailing commas, missing quotes around keys, or using single quotes instead of double quotes. Our tool highlights the exact position of the syntax error."
+                    },
+                    {
+                        question: "What is the difference between formatting and minifying?",
+                        answer: "Formatting adds whitespace and indentation to make the JSON readable for humans. Minifying removes all unnecessary whitespace to reduce the file size for transmission."
+                    }
+                ]}
+            />
+        </ToolWrapper>
+    )
+}

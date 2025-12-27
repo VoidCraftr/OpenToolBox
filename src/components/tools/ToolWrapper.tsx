@@ -1,11 +1,13 @@
 import { Separator } from "@/components/ui/separator"
 import { AdBanner } from "@/components/ads/AdBanner"
+import { RelatedTools } from "@/components/tools/RelatedTools"
 
 interface ToolWrapperProps {
     title: string
     description: string
     children: React.ReactNode
     adSlot?: string
+    toolSlug?: string // Added for RelatedTools
 }
 
 export function ToolWrapper({
@@ -13,6 +15,7 @@ export function ToolWrapper({
     description,
     children,
     adSlot = "1234567890", // Default test slot
+    toolSlug,
 }: ToolWrapperProps) {
     return (
         <div className="mx-auto max-w-4xl space-y-6">
@@ -28,6 +31,12 @@ export function ToolWrapper({
             <div className="min-w-0 space-y-6">
                 {children}
             </div>
+
+            {toolSlug && (
+                <div className="mt-16">
+                    <RelatedTools currentSlug={toolSlug} />
+                </div>
+            )}
 
             <div className="mt-12">
                 <AdBanner slot="bottom-ad" />

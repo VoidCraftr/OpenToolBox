@@ -1,0 +1,101 @@
+"use client"
+
+import { useState } from "react"
+import { Copy, RefreshCw } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Slider } from "@/components/ui/slider"
+import { Card } from "@/components/ui/card"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { ToolWrapper } from "@/components/tools/ToolWrapper"
+
+export default function GradientGeneratorPage() {
+    const [type, setType] = useState("linear")
+    const [deg, setDeg] = useState([90])
+    const [color1, setColor1] = useState("#4f46e5")
+    const [color2, setColor2] = useState("#9333ea")
+
+    const gradientValue = type === "linear"
+        ? `linear-gradient(${deg}deg, ${color1}, ${color2})`
+        : `radial-gradient(circle, ${color1}, ${color2})`
+
+    const cssCode = `background: ${gradientValue};`
+
+    return (
+        <ToolWrapper
+            title="Gradient Generator"
+            description="Design beautiful CSS gradients. Customize colors, angle, and type."
+            adSlot="gradient-slot"
+        >
+            <div className="grid gap-8 lg:grid-cols-2">
+                <div className="space-y-6">
+                    <Card className="p-6 space-y-6">
+                        <div className="space-y-4">
+                            <div className="space-y-2">
+                                <Label>Type</Label>
+                                <Select value={type} onValueChange={setType}>
+                                    <SelectTrigger><SelectValue /></SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="linear">Linear</SelectItem>
+                                        <SelectItem value="radial">Radial</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {type === "linear" && (
+                                <div className="space-y-2">
+                                    <div className="flex justify-between"><Label>Angle</Label><span className="font-mono">{deg}deg</span></div>
+                                    <Slider value={deg} onValueChange={setDeg} min={0} max={360} />
+                                </div>
+                            )}
+
+                            <div className="grid grid-cols-2 gap-4 pt-4">
+                                <div className="space-y-2">
+                                    <Label>Start Color</Label>
+                                    <div className="flex gap-2">
+                                        <Input type="color" value={color1} onChange={(e) => setColor1(e.target.value)} className="w-12 p-1" />
+                                        <Input value={color1} onChange={(e) => setColor1(e.target.value)} className="uppercase" />
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>End Color</Label>
+                                    <div className="flex gap-2">
+                                        <Input type="color" value={color2} onChange={(e) => setColor2(e.target.value)} className="w-12 p-1" />
+                                        <Input value={color2} onChange={(e) => setColor2(e.target.value)} className="uppercase" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card className="p-4 bg-muted/50 font-mono text-sm relative">
+                        <code className="block break-all pr-10">{cssCode}</code>
+                        <Button
+                            size="icon"
+                            variant="ghost"
+                            className="absolute right-2 top-2 h-8 w-8"
+                            onClick={() => navigator.clipboard.writeText(cssCode)}
+                        >
+                            <Copy className="h-4 w-4" />
+                        </Button>
+                    </Card>
+                </div>
+
+                <div className="flex items-center justify-center rounded-lg border bg-muted/20 min-h-[400px]">
+                    <div
+                        className="h-64 w-64 rounded-xl shadow-lg transition-all duration-200"
+                        style={{ background: gradientValue }}
+                    />
+                </div>
+            </div>
+        </ToolWrapper>
+    )
+}

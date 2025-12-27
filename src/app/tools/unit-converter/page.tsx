@@ -1,0 +1,129 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { ArrowRightLeft } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ToolWrapper } from "@/components/tools/ToolWrapper"
+
+const RATES: Record<string, number> = {
+    // Length (Base: Meter)
+    "m": 1,
+    "km": 0.001,
+    "cm": 100,
+    "mm": 1000,
+    "ft": 3.28084,
+    "in": 39.3701,
+    "mi": 0.000621371,
+
+    // Weight (Base: Gram)
+    "g": 1,
+    "kg": 0.001,
+    "mg": 1000,
+    "lb": 0.00220462,
+    "oz": 0.035274,
+}
+
+export default function UnitConverterPage() {
+    const [category, setCategory] = useState("length")
+    const [fromUnit, setFromUnit] = useState("m")
+    const [toUnit, setToUnit] = useState("ft")
+    const [fromVal, setFromVal] = useState("1")
+    const [toVal, setToVal] = useState("")
+
+    useEffect(() => {
+        convert(fromVal, fromUnit, toUnit, category)
+    }, [fromUnit, toUnit, category])
+
+    const convert = (val: string, from: string, to: string, cat: string) => {
+        const value = parseFloat(val)
+        if (isNaN(value)) {
+            setToVal("")
+            return
+        }
+
+        if (cat === "temperature") {
+            let result = 0
+            // Celsius Base
+            let celsius = value
+            if (from === "f") celsius = (value - 32) * 5 / 9
+            if (from === "k") celsius = value - 273.15
+
+            if (to === "c") result = celsius
+            if (to === "f") result = (celsius * 9 / 5) + 32
+            if (to === "k") result = celsius + 273.15
+
+            setToVal(result.toFixed(2))
+        } else {
+            // Ratio based (Length, Weight)
+            const base = value / RATES[from]
+            const result = base * RATES[to]
+            setToVal(result.toFixed(4).replace(/\.?0+$/, ""))
+        }
+    }
+
+    const handleInput = (val: string) => {
+        setFromVal(val)
+        convert(val, fromUnit, toUnit, category)
+    }
+
+    return (
+        <ToolWrapper
+            title="Unit Converter"
+            description="Convert between common measurements for length, weight, and temperature."
+            adSlot="unit-converter-slot"
+        >
+            <Tabs defaultValue="length" onValueChange={(v) => { setCategory(v); setFromUnit(v === 'temperature' ? 'c' : v === 'weight' ? 'kg' : 'm'); setToUnit(v === 'temperature' ? 'f' : v === 'weight' ? 'lb' : 'ft'); }}>
+                <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="length">Length</TabsTrigger>
+                    <TabsTrigger value="weight">Weight</TabsTrigger>
+                    <TabsTrigger value="temperature">Temperature</TabsTrigger>
+                </TabsList>
+            </Tabs>
+
+            <div className="mt-8 grid gap-8 md:grid-cols-[1fr_auto_1fr] items-center">
+                <div className="space-y-2">
+                    <Label>From</Label>
+                    <Input type="number" value={fromVal} onChange={(e) => handleInput(e.target.value)} className="text-lg" />
+                    <Select value={fromUnit} onValueChange={setFromUnit}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            {category === "length" && <><SelectItem value="m">Meters (m)</SelectItem><SelectItem value="km">Kilometers (km)</SelectItem><SelectItem value="ft">Feet (ft)</SelectItem><SelectItem value="in">Inches (in)</SelectItem><SelectItem value="mi">Miles (mi)</SelectItem></>}
+                            {category === "weight" && <><SelectItem value="kg">Kilograms (kg)</SelectItem><SelectItem value="g">Grams (g)</SelectItem><SelectItem value="lb">Pounds (lb)</SelectItem><SelectItem value="oz">Ounces (oz)</SelectItem></>}
+                            {category === "temperature" && <><SelectItem value="c">Celsius (°C)</SelectItem><SelectItem value="f">Fahrenheit (°F)</SelectItem><SelectItem value="k">Kelvin (K)</SelectItem></>}
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                <div className="flex justify-center">
+                    <Button variant="ghost" size="icon" disabled>
+                        <ArrowRightLeft className="h-6 w-6 text-muted-foreground" />
+                    </Button>
+                </div>
+
+                <div className="space-y-2">
+                    <Label>To</Label>
+                    <Input readOnly value={toVal} className="text-lg bg-muted" />
+                    <Select value={toUnit} onValueChange={setToUnit}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            {category === "length" && <><SelectItem value="m">Meters (m)</SelectItem><SelectItem value="km">Kilometers (km)</SelectItem><SelectItem value="ft">Feet (ft)</SelectItem><SelectItem value="in">Inches (in)</SelectItem><SelectItem value="mi">Miles (mi)</SelectItem></>}
+                            {category === "weight" && <><SelectItem value="kg">Kilograms (kg)</SelectItem><SelectItem value="g">Grams (g)</SelectItem><SelectItem value="lb">Pounds (lb)</SelectItem><SelectItem value="oz">Ounces (oz)</SelectItem></>}
+                            {category === "temperature" && <><SelectItem value="c">Celsius (°C)</SelectItem><SelectItem value="f">Fahrenheit (°F)</SelectItem><SelectItem value="k">Kelvin (K)</SelectItem></>}
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
+        </ToolWrapper>
+    )
+}

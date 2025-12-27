@@ -1,0 +1,78 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ToolWrapper } from "@/components/tools/ToolWrapper"
+
+export default function KeycodeInfoPage() {
+    const [event, setEvent] = useState<KeyboardEvent | null>(null)
+
+    useEffect(() => {
+        const down = (e: KeyboardEvent) => {
+            e.preventDefault()
+            setEvent(e)
+        }
+        window.addEventListener("keydown", down)
+        return () => window.removeEventListener("keydown", down)
+    }, [])
+
+    if (!event) {
+        return (
+            <ToolWrapper title="Keycode Info" description="Press any key to get JavaScript event keycode information." adSlot="keycode-info-slot">
+                <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl border-2 border-dashed bg-muted/20 text-center">
+                    <h2 className="text-2xl font-bold">Press any key on your keyboard</h2>
+                    <p className="text-muted-foreground">Focus this window first</p>
+                </div>
+            </ToolWrapper>
+        )
+    }
+
+    return (
+        <ToolWrapper
+            title="Keycode Info"
+            description="JavaScript keyboard event properties for the last pressed key."
+            adSlot="keycode-info-slot"
+        >
+            <div className="flex flex-col items-center justify-center gap-8 py-8">
+                <div className="flex flex-col items-center gap-2">
+                    <span className="text-muted-foreground text-sm font-medium uppercase tracking-wider">event.keyCode</span>
+                    <div className="text-9xl font-bold text-primary">{event.keyCode}</div>
+                </div>
+
+                <div className="grid w-full gap-4 sm:grid-cols-2 md:grid-cols-4">
+                    <Card>
+                        <CardHeader className="p-4 pb-2"><CardTitle className="text-xs text-muted-foreground uppercase">event.key</CardTitle></CardHeader>
+                        <CardContent className="p-4 pt-0 text-xl font-mono font-bold line-clamp-1" title={event.key}>{event.key === " " ? "(Space)" : event.key}</CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="p-4 pb-2"><CardTitle className="text-xs text-muted-foreground uppercase">event.code</CardTitle></CardHeader>
+                        <CardContent className="p-4 pt-0 text-xl font-mono font-bold">{event.code}</CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="p-4 pb-2"><CardTitle className="text-xs text-muted-foreground uppercase">event.which</CardTitle></CardHeader>
+                        <CardContent className="p-4 pt-0 text-xl font-mono font-bold">{event.which}</CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="p-4 pb-2"><CardTitle className="text-xs text-muted-foreground uppercase">event.location</CardTitle></CardHeader>
+                        <CardContent className="p-4 pt-0 text-xl font-mono font-bold">{event.location}</CardContent>
+                    </Card>
+                </div>
+
+                <div className="grid w-full gap-6 sm:grid-cols-3 text-center">
+                    <div className="space-y-1">
+                        <div className="text-sm text-muted-foreground">event.ctrlKey</div>
+                        <div className={`font-mono font-bold ${event.ctrlKey ? "text-green-500" : "text-muted-foreground"}`}>{String(event.ctrlKey)}</div>
+                    </div>
+                    <div className="space-y-1">
+                        <div className="text-sm text-muted-foreground">event.shiftKey</div>
+                        <div className={`font-mono font-bold ${event.shiftKey ? "text-green-500" : "text-muted-foreground"}`}>{String(event.shiftKey)}</div>
+                    </div>
+                    <div className="space-y-1">
+                        <div className="text-sm text-muted-foreground">event.metaKey</div>
+                        <div className={`font-mono font-bold ${event.metaKey ? "text-green-500" : "text-muted-foreground"}`}>{String(event.metaKey)}</div>
+                    </div>
+                </div>
+            </div>
+        </ToolWrapper>
+    )
+}

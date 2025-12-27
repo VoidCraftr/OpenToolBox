@@ -17,16 +17,36 @@ export default function WordCounterPage() {
         sentences: 0,
         paragraphs: 0,
         readingTime: 0,
+        speakingTime: 0,
+        topKeywords: [] as { word: string, count: number }[]
     })
 
     useEffect(() => {
-        const words = text.trim() === "" ? 0 : text.trim().split(/\s+/).length
+        const wordsArr = text.trim() === "" ? [] : text.trim().split(/\s+/)
+        const words = wordsArr.length
         const characters = text.length
         const sentences = text.trim() === "" ? 0 : text.split(/[.!?]+/).length - 1
         const paragraphs = text.trim() === "" ? 0 : text.split(/\n+/).length
         const readingTime = Math.ceil(words / 200)
+        const speakingTime = Math.ceil(words / 130)
 
-        setStats({ words, characters, sentences, paragraphs, readingTime })
+        // Keyword Density
+        const frequency: Record<string, number> = {}
+        const stopWords = new Set(['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me'])
+
+        wordsArr.forEach(w => {
+            const clean = w.toLowerCase().replace(/[.,!?;:()]/g, "")
+            if (clean.length > 2 && !stopWords.has(clean)) {
+                frequency[clean] = (frequency[clean] || 0) + 1
+            }
+        })
+
+        const topKeywords = Object.entries(frequency)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([word, count]) => ({ word, count }))
+
+        setStats({ words, characters, sentences, paragraphs, readingTime, speakingTime, topKeywords })
     }, [text])
 
     const handleCase = (type: "upper" | "lower" | "title") => {
@@ -47,7 +67,7 @@ export default function WordCounterPage() {
         >
             <div className="grid gap-6">
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
                     <Card>
                         <CardHeader className="p-4 pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Words</CardTitle></CardHeader>
                         <CardContent className="p-4 pt-0 text-2xl font-bold">{stats.words}</CardContent>
@@ -63,6 +83,10 @@ export default function WordCounterPage() {
                     <Card>
                         <CardHeader className="p-4 pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Reading Time</CardTitle></CardHeader>
                         <CardContent className="p-4 pt-0 text-2xl font-bold">~{stats.readingTime} min</CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="p-4 pb-2"><CardTitle className="text-sm font-medium text-muted-foreground">Speaking Time</CardTitle></CardHeader>
+                        <CardContent className="p-4 pt-0 text-2xl font-bold">~{stats.speakingTime} min</CardContent>
                     </Card>
                 </div>
 
@@ -92,6 +116,20 @@ export default function WordCounterPage() {
                         placeholder="Type or paste your text here..."
                         className="min-h-[400px] text-lg leading-relaxed p-6"
                     />
+
+                    {stats.topKeywords.length > 0 && (
+                        <div className="space-y-3">
+                            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Keyword Density</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {stats.topKeywords.map((k) => (
+                                    <div key={k.word} className="flex items-center bg-muted/50 rounded-full px-3 py-1 text-sm border">
+                                        <span className="font-bold mr-2">{k.word}</span>
+                                        <span className="text-muted-foreground text-xs">{k.count}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 

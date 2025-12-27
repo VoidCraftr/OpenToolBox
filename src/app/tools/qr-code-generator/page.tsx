@@ -18,6 +18,18 @@ export default function QrCodeGeneratorPage() {
     const [bgColor, setBgColor] = useState("#ffffff")
     const [fgColor, setFgColor] = useState("#000000")
 
+    const [logo, setLogo] = useState<string | null>(null)
+
+    const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader()
+            reader.onload = (ev) => {
+                setLogo(ev.target?.result as string)
+            }
+            reader.readAsDataURL(e.target.files[0])
+        }
+    }
+
     const handleDownload = () => {
         const canvas = document.getElementById("qr-canvas") as HTMLCanvasElement
         if (canvas) {
@@ -72,10 +84,25 @@ export default function QrCodeGeneratorPage() {
                             </div>
                         </div>
                     </div>
+
+                    <div className="space-y-2 pt-2 border-t">
+                        <Label>Center Logo (Optional)</Label>
+                        <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleLogoUpload}
+                            className="cursor-pointer"
+                        />
+                        {logo && (
+                            <Button variant="outline" size="sm" onClick={() => setLogo(null)} className="w-full text-destructive hover:text-destructive">
+                                Remove Logo
+                            </Button>
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex flex-col items-center justify-center space-y-6 rounded-lg border bg-muted/20 p-8">
-                    <Card className="p-4 bg-white inline-block">
+                    <Card className="p-4 bg-white inline-block shadow-sm">
                         <QRCodeCanvas
                             id="qr-canvas"
                             value={url}
@@ -84,6 +111,12 @@ export default function QrCodeGeneratorPage() {
                             fgColor={fgColor}
                             level={"H"}
                             includeMargin={true}
+                            imageSettings={logo ? {
+                                src: logo,
+                                height: size[0] * 0.2,
+                                width: size[0] * 0.2,
+                                excavate: true,
+                            } : undefined}
                         />
                     </Card>
 
@@ -117,6 +150,6 @@ export default function QrCodeGeneratorPage() {
                     }
                 ]}
             />
-        </ToolWrapper>
+        </ToolWrapper >
     )
 }

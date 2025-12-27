@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Upload, Download, Image as ImageIcon, RefreshCcw } from "lucide-react"
+import { Upload, Download, Image as ImageIcon, RefreshCcw, Check } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Slider } from "@/components/ui/slider"
 import {
     Select,
     SelectContent,
@@ -20,16 +21,27 @@ export default function ImageConverterClient() {
     const [file, setFile] = useState<File | null>(null)
     const [preview, setPreview] = useState<string | null>(null)
     const [format, setFormat] = useState("image/png")
+    const [quality, setQuality] = useState([0.9])
     const [isConverting, setIsConverting] = useState(false)
     const [convertedUrl, setConvertedUrl] = useState<string | null>(null)
+    const [stats, setStats] = useState<{ original: string, compressed: string, saved: string } | null>(null)
 
     const canvasRef = useRef<HTMLCanvasElement>(null)
+
+    const formatSize = (bytes: number) => {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0]
             setFile(selectedFile)
             setConvertedUrl(null)
+            setStats(null)
 
             const reader = new FileReader()
             reader.onload = (ev) => {
@@ -53,8 +65,25 @@ export default function ImageConverterClient() {
                 const ctx = canvas.getContext("2d")
                 if (ctx) {
                     ctx.drawImage(img, 0, 0)
-                    const newUrl = canvas.toDataURL(format)
+
+                    // Quality only applies to jpeg/webp
+                    const q = (format === "image/jpeg" || format === "image/webp") ? quality[0] : undefined
+                    const newUrl = canvas.toDataURL(format, q)
+
                     setConvertedUrl(newUrl)
+
+                    // Calculate sizes
+                    const head = `data:${format};base64,`
+                    const size = Math.round((newUrl.length - head.length) * 3 / 4)
+                    const savedBytes = file.size - size
+                    const savedPercent = Math.round((savedBytes / file.size) * 100)
+
+                    setStats({
+                        original: formatSize(file.size),
+                        compressed: formatSize(size),
+                        saved: savedBytes > 0 ? `-${savedPercent}%` : '+0%'
+                    })
+
                     setIsConverting(false)
                 }
             }
@@ -64,7 +93,7 @@ export default function ImageConverterClient() {
     const handleDownload = () => {
         if (convertedUrl) {
             const link = document.createElement("a")
-            link.download = `converted-image.${format.split("/")[1]}`
+            link.download = `converted.${format.split("/")[1]}`
             link.href = convertedUrl
             link.click()
         }
@@ -106,18 +135,38 @@ export default function ImageConverterClient() {
                 </div>
 
                 <div className="space-y-6">
-                    <div className="space-y-2">
-                        <Label>Target Format</Label>
-                        <Select value={format} onValueChange={setFormat}>
-                            <SelectTrigger>
-                                <SelectValue placeholder="Select format" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="image/png">PNG</SelectItem>
-                                <SelectItem value="image/jpeg">JPEG</SelectItem>
-                                <SelectItem value="image/webp">WebP</SelectItem>
-                            </SelectContent>
-                        </Select>
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <Label>Target Format</Label>
+                            <Select value={format} onValueChange={setFormat}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select format" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="image/png">PNG (Lossless)</SelectItem>
+                                    <SelectItem value="image/jpeg">JPEG (Good Compression)</SelectItem>
+                                    <SelectItem value="image/webp">WebP (Best Compression)</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        {(format === "image/jpeg" || format === "image/webp") && (
+                            <div className="space-y-4 pt-2">
+                                <div className="flex justify-between">
+                                    <Label>Quality / Compression</Label>
+                                    <span className="text-sm font-mono">{Math.round(quality[0] * 100)}%</span>
+                                </div>
+                                <Slider
+                                    value={quality}
+                                    onValueChange={setQuality}
+                                    min={0.1}
+                                    max={1.0}
+                                    step={0.05}
+                                    className="cursor-pointer"
+                                />
+                                <p className="text-xs text-muted-foreground">Lower quality = Smaller file size</p>
+                            </div>
+                        )}
                     </div>
 
                     <Button onClick={handleConvert} disabled={!file || isConverting} className="w-full">
@@ -135,9 +184,29 @@ export default function ImageConverterClient() {
                     </Button>
 
                     {convertedUrl && (
-                        <div className="rounded-md border p-4 bg-muted/50 text-center space-y-4">
-                            <p className="text-sm font-medium text-green-600 dark:text-green-400">Conversion Successful!</p>
-                            <Button onClick={handleDownload} variant="outline" className="w-full">
+                        <div className="rounded-md border p-6 bg-muted/50 text-center space-y-4 animate-in fade-in slide-in-from-top-2">
+                            <div className="flex items-center justify-center gap-2 text-green-600 dark:text-green-400 font-medium">
+                                <Check className="h-5 w-5" /> Conversion Successful!
+                            </div>
+
+                            {stats && (
+                                <div className="grid grid-cols-3 gap-2 text-sm bg-background/50 p-3 rounded-lg">
+                                    <div>
+                                        <div className="text-muted-foreground text-xs">Original</div>
+                                        <div className="font-bold">{stats.original}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-muted-foreground text-xs">New Size</div>
+                                        <div className="font-bold">{stats.compressed}</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-muted-foreground text-xs">Saved</div>
+                                        <div className="font-bold text-green-500">{stats.saved}</div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <Button onClick={handleDownload} variant="default" className="w-full">
                                 <Download className="mr-2 h-4 w-4" /> Download Image
                             </Button>
                         </div>

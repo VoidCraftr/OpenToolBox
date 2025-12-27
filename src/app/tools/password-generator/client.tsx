@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import { Progress } from "@/components/ui/progress"
 import { Card, CardContent } from "@/components/ui/card"
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
 import { ContentSection } from "@/components/tools/ContentSection"
@@ -20,7 +21,7 @@ export default function PasswordGeneratorClient() {
         numbers: true,
         symbols: true,
     })
-    const [copied, setCopied] = useState(false)
+    const [history, setHistory] = useState<string[]>([])
 
     const generatePassword = useCallback(() => {
         const sets = {
@@ -43,16 +44,22 @@ export default function PasswordGeneratorClient() {
             result += chars.charAt(Math.floor(Math.random() * chars.length))
         }
         setPassword(result)
+
+        setHistory(prev => {
+            if (prev.includes(result)) return prev
+            return [result, ...prev].slice(0, 8)
+        })
     }, [length, options])
 
     useEffect(() => {
         generatePassword()
     }, [generatePassword])
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(password)
+    const handleCopy = (text: string) => {
+        navigator.clipboard.writeText(text)
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
+        // Ideally individual copy feedback for history items, but shared state is simple for now
     }
 
     const handleOptionChange = (key: keyof typeof options) => {
@@ -66,16 +73,22 @@ export default function PasswordGeneratorClient() {
 
     const calculateStrength = () => {
         let score = 0
-        if (length[0] > 8) score++
-        if (length[0] > 12) score++
-        if (options.uppercase) score++
-        if (options.lowercase) score++
-        if (options.numbers) score++
-        if (options.symbols) score++
+        if (length[0] >= 8) score += 10
+        if (length[0] >= 12) score += 20
+        if (length[0] >= 16) score += 20
+        if (options.uppercase) score += 10
+        if (options.lowercase) score += 10
+        if (options.numbers) score += 10
+        if (options.symbols) score += 20
 
-        if (score < 3) return { label: "Weak", color: "text-red-500" }
-        if (score < 5) return { label: "Medium", color: "text-yellow-500" }
-        return { label: "Strong", color: "text-green-500" }
+        score = Math.min(100, score)
+
+        let label = "Weak", color = "bg-red-500", textColor = "text-red-500"
+        if (score >= 80) { label = "Very Strong"; color = "bg-green-600"; textColor = "text-green-600" }
+        else if (score >= 60) { label = "Strong"; color = "bg-green-500"; textColor = "text-green-500" }
+        else if (score >= 40) { label = "Medium"; color = "bg-yellow-500"; textColor = "text-yellow-500" }
+
+        return { label, color, textColor, score }
     }
 
     const strength = calculateStrength()
@@ -97,7 +110,7 @@ export default function PasswordGeneratorClient() {
                         <Button size="icon" variant="ghost" onClick={generatePassword}>
                             <RefreshCw className="h-4 w-4" />
                         </Button>
-                        <Button size="icon" onClick={handleCopy}>
+                        <Button size="icon" onClick={() => handleCopy(password)}>
                             {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                         </Button>
                     </div>
@@ -121,9 +134,12 @@ export default function PasswordGeneratorClient() {
                                 />
                             </div>
 
-                            <div className="flex items-center justify-between pt-4">
-                                <Label>Strength</Label>
-                                <span className={`font-bold ${strength.color}`}>{strength.label}</span>
+                            <div className="space-y-3 pt-4">
+                                <div className="flex items-center justify-between">
+                                    <Label>Security Strength</Label>
+                                    <span className={`font-bold ${strength.textColor}`}>{strength.label}</span>
+                                </div>
+                                <Progress value={strength.score} className="h-2" indicatorClassName={strength.color} />
                             </div>
                         </CardContent>
                     </Card>
@@ -149,6 +165,23 @@ export default function PasswordGeneratorClient() {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* History */}
+                {history.length > 0 && (
+                    <div className="space-y-4">
+                        <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Recently Generated</h3>
+                        <div className="grid gap-2 grid-cols-1 md:grid-cols-2">
+                            {history.slice(1).map((pass, i) => (
+                                <div key={i} className="flex items-center justify-between p-3 rounded-lg border bg-muted/30 text-sm font-mono break-all group">
+                                    <span className="truncate mr-4">{pass}</span>
+                                    <Button size="icon" variant="ghost" className="h-6 w-6 opacity-50 group-hover:opacity-100" onClick={() => handleCopy(pass)}>
+                                        <Copy className="h-3 w-3" />
+                                    </Button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <ContentSection

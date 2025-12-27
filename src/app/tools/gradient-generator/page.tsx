@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Copy, RefreshCw } from "lucide-react"
+import { Copy, RefreshCw, Shuffle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -18,6 +18,15 @@ import {
 import { ToolWrapper } from "@/components/tools/ToolWrapper"
 import { ContentSection } from "@/components/tools/ContentSection"
 
+const PRESETS = [
+    { name: "Sunset", c1: "#ff512f", c2: "#dd2476" },
+    { name: "Sea", c1: "#2b5876", c2: "#4e4376" },
+    { name: "Emerald", c1: "#348f50", c2: "#56b4d3" },
+    { name: "Royal", c1: "#141e30", c2: "#243b55" },
+    { name: "Warm", c1: "#fce38a", c2: "#f38181" },
+    { name: "Night", c1: "#0f2027", c2: "#2c5364" },
+]
+
 export default function GradientGeneratorPage() {
     const [type, setType] = useState("linear")
     const [deg, setDeg] = useState([90])
@@ -30,6 +39,13 @@ export default function GradientGeneratorPage() {
 
     const cssCode = `background: ${gradientValue};`
 
+    const handleRandom = () => {
+        const randomColor = () => "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')
+        setColor1(randomColor())
+        setColor2(randomColor())
+        setDeg([Math.floor(Math.random() * 360)])
+    }
+
     return (
         <ToolWrapper
             title="Gradient Generator"
@@ -40,6 +56,21 @@ export default function GradientGeneratorPage() {
                 <div className="space-y-6">
                     <Card className="p-6 space-y-6">
                         <div className="space-y-4">
+                            <div className="flex gap-2">
+                                <Button variant="outline" className="flex-1" onClick={handleRandom}>
+                                    <Shuffle className="mr-2 h-4 w-4" /> Randomize
+                                </Button>
+                                <Select onValueChange={(v) => {
+                                    const p = PRESETS.find(x => x.name === v)
+                                    if (p) { setColor1(p.c1); setColor2(p.c2); }
+                                }}>
+                                    <SelectTrigger className="flex-1"><SelectValue placeholder="Load Preset" /></SelectTrigger>
+                                    <SelectContent>
+                                        {PRESETS.map(p => <SelectItem key={p.name} value={p.name}>{p.name}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
                             <div className="space-y-2">
                                 <Label>Type</Label>
                                 <Select value={type} onValueChange={setType}>

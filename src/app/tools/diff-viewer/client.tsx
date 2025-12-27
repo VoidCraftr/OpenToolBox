@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { DiffEditor } from "@monaco-editor/react"
-import { Trash2, ArrowDown } from "lucide-react"
+import { Trash2, ArrowDown, ArrowLeftRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -63,6 +63,12 @@ export default function DiffViewerClient() {
         setShowDiff(false)
     }
 
+    const handleSwap = () => {
+        const temp = original
+        setOriginal(modified)
+        setModified(temp)
+    }
+
     return (
         <ToolWrapper
             title="Code Diff Viewer"
@@ -108,7 +114,7 @@ export default function DiffViewerClient() {
                 </div>
 
                 {/* Inputs - Always Visible */}
-                <div className="grid gap-6 md:grid-cols-2">
+                <div className="relative grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
                         <h3 className="text-sm font-semibold flex items-center gap-2">
                             <span className="bg-muted px-2 py-0.5 rounded text-xs">1</span> Original Text
@@ -120,10 +126,22 @@ export default function DiffViewerClient() {
                             onChange={(e) => setOriginal(e.target.value)}
                         />
                     </div>
+
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block">
+                        <Button variant="outline" size="icon" className="rounded-full shadow-md" onClick={handleSwap} title="Swap Inputs">
+                            <ArrowLeftRight className="h-4 w-4" />
+                        </Button>
+                    </div>
+
                     <div className="space-y-2">
-                        <h3 className="text-sm font-semibold flex items-center gap-2">
-                            <span className="bg-muted px-2 py-0.5 rounded text-xs">2</span> Changed Text
-                        </h3>
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-sm font-semibold flex items-center gap-2">
+                                <span className="bg-muted px-2 py-0.5 rounded text-xs">2</span> Changed Text
+                            </h3>
+                            <Button variant="ghost" size="sm" className="md:hidden h-6" onClick={handleSwap}>
+                                <ArrowLeftRight className="h-3 w-3 mr-1" /> Swap
+                            </Button>
+                        </div>
                         <Textarea
                             className="font-mono h-[300px] resize-y focus-visible:ring-1"
                             placeholder="Paste changed content here..."

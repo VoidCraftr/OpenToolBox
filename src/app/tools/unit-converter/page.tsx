@@ -42,6 +42,8 @@ export default function UnitConverterPage() {
     const [fromVal, setFromVal] = useState("1")
     const [toVal, setToVal] = useState("")
 
+    const [formula, setFormula] = useState("")
+
     useEffect(() => {
         convert(fromVal, fromUnit, toUnit, category)
     }, [fromUnit, toUnit, category])
@@ -50,6 +52,7 @@ export default function UnitConverterPage() {
         const value = parseFloat(val)
         if (isNaN(value)) {
             setToVal("")
+            setFormula("")
             return
         }
 
@@ -65,11 +68,31 @@ export default function UnitConverterPage() {
             if (to === "k") result = celsius + 273.15
 
             setToVal(result.toFixed(2))
+
+            // Formula Text
+            if (from === "c" && to === "f") setFormula(`(${value}°C × 9/5) + 32 = ${result.toFixed(2)}°F`)
+            if (from === "f" && to === "c") setFormula(`(${value}°F − 32) × 5/9 = ${result.toFixed(2)}°C`)
+            if (from === "c" && to === "k") setFormula(`${value}°C + 273.15 = ${result.toFixed(2)}K`)
+            if (from === "k" && to === "c") setFormula(`${value}K − 273.15 = ${result.toFixed(2)}°C`)
+            if (from === from) setFormula(`${value}°${from.toUpperCase()} = ${value}°${to.toUpperCase()}`)
+
         } else {
             // Ratio based (Length, Weight)
             const base = value / RATES[from]
             const result = base * RATES[to]
             setToVal(result.toFixed(4).replace(/\.?0+$/, ""))
+
+            if (from === to) {
+                setFormula(`${value} ${from} = ${value} ${to}`)
+            } else {
+                // Determine multiplication factor relative to 1 unit
+                const factor = (1 / RATES[from]) * RATES[to]
+                setFormula(`Multiply by ${factor.toExponential(3)}`) // Simplified for generic
+
+                // Better Formula: 1 Unit From = X Unit To
+                const oneUnit = (1 / RATES[from]) * RATES[to]
+                setFormula(`1 ${from} ≈ ${oneUnit.toExponential(4)} ${to}`)
+            }
         }
     }
 
@@ -125,6 +148,15 @@ export default function UnitConverterPage() {
                     </Select>
                 </div>
             </div>
+
+            {formula && (
+                <div className="mt-8 p-4 rounded-lg bg-muted/30 border text-center">
+                    <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block">Formula</Label>
+                    <div className="font-mono text-lg font-medium text-primary">
+                        {formula}
+                    </div>
+                </div>
+            )}
 
             <ContentSection
                 title="Unit Converter Guide"

@@ -12,13 +12,10 @@ import { ToolWrapper } from "@/components/tools/ToolWrapper"
 import { ContentSection } from "@/components/tools/ContentSection"
 
 export default function BoxShadowGeneratorPage() {
-    const [hOffset, setHOffset] = useState([10])
-    const [vOffset, setVOffset] = useState([10])
-    const [blur, setBlur] = useState([20])
-    const [spread, setSpread] = useState([5])
-    const [color, setColor] = useState("#000000")
-    const [opacity, setOpacity] = useState([0.3])
-    const [inset, setInset] = useState(false)
+    const [shadows, setShadows] = useState([
+        { hOffset: 0, vOffset: 10, blur: 20, spread: 5, color: "#000000", opacity: 0.3, inset: false }
+    ])
+    const [activeLayer, setActiveLayer] = useState(0)
 
     const hexToRgba = (hex: string, alpha: number) => {
         const r = parseInt(hex.slice(1, 3), 16)
@@ -27,56 +24,100 @@ export default function BoxShadowGeneratorPage() {
         return `rgba(${r}, ${g}, ${b}, ${alpha})`
     }
 
-    const shadowValue = `${inset ? "inset " : ""}${hOffset}px ${vOffset}px ${blur}px ${spread}px ${hexToRgba(color, opacity[0])}`
+    const current = shadows[activeLayer] || shadows[0]
+
+    const updateShadow = (key: string, value: any) => {
+        setShadows(prev => {
+            const newShadows = [...prev]
+            newShadows[activeLayer] = { ...newShadows[activeLayer], [key]: value }
+            return newShadows
+        })
+    }
+
+    const addLayer = () => {
+        setShadows([...shadows, { hOffset: 10, vOffset: 10, blur: 20, spread: 0, color: "#000000", opacity: 0.2, inset: false }])
+        setActiveLayer(shadows.length)
+    }
+
+    const removeLayer = (e: React.MouseEvent, index: number) => {
+        e.stopPropagation()
+        if (shadows.length > 1) {
+            const newShadows = shadows.filter((_, i) => i !== index)
+            setShadows(newShadows)
+            setActiveLayer(Math.max(0, activeLayer - 1))
+        }
+    }
+
+    const shadowValue = shadows.map(s =>
+        `${s.inset ? "inset " : ""}${s.hOffset}px ${s.vOffset}px ${s.blur}px ${s.spread}px ${hexToRgba(s.color, s.opacity)}`
+    ).join(", ")
+
     const cssCode = `box-shadow: ${shadowValue};`
 
     return (
         <ToolWrapper
             title="Box Shadow Generator"
-            description="Create beautiful CSS box shadows visually. Customize offset, blur, spread, `and color."
+            description="Create beautiful CSS box shadows visually. Stack multiple layers for realistic depth."
             adSlot="box-shadow-slot"
         >
             <div className="grid gap-8 lg:grid-cols-2">
                 {/* Controls */}
                 <div className="space-y-6">
+                    {/* Layer Tabs */}
+                    <div className="flex gap-2 overflow-x-auto pb-2">
+                        {shadows.map((_, i) => (
+                            <div
+                                key={i}
+                                onClick={() => setActiveLayer(i)}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer border transition-colors ${activeLayer === i ? "bg-primary text-primary-foreground border-primary" : "bg-muted hover:bg-muted/80"}`}
+                            >
+                                Layer {i + 1}
+                                {shadows.length > 1 && (
+                                    <span onClick={(e) => removeLayer(e, i)} className="hover:text-destructive">×</span>
+                                )}
+                            </div>
+                        ))}
+                        <Button variant="outline" size="sm" className="rounded-full h-7 text-xs" onClick={addLayer}>+ Add Layer</Button>
+                    </div>
+
                     <Card className="p-6 space-y-6">
                         <div className="space-y-4">
-                            <div className="flex justify-between"><Label>Horizontal Offset</Label><span className="font-mono">{hOffset}px</span></div>
-                            <Slider value={hOffset} onValueChange={setHOffset} min={-100} max={100} />
+                            <div className="flex justify-between"><Label>Horizontal Offset</Label><span className="font-mono">{current.hOffset}px</span></div>
+                            <Slider value={[current.hOffset]} onValueChange={([v]) => updateShadow('hOffset', v)} min={-100} max={100} />
 
-                            <div className="flex justify-between"><Label>Vertical Offset</Label><span className="font-mono">{vOffset}px</span></div>
-                            <Slider value={vOffset} onValueChange={setVOffset} min={-100} max={100} />
+                            <div className="flex justify-between"><Label>Vertical Offset</Label><span className="font-mono">{current.vOffset}px</span></div>
+                            <Slider value={[current.vOffset]} onValueChange={([v]) => updateShadow('vOffset', v)} min={-100} max={100} />
 
-                            <div className="flex justify-between"><Label>Blur Radius</Label><span className="font-mono">{blur}px</span></div>
-                            <Slider value={blur} onValueChange={setBlur} min={0} max={100} />
+                            <div className="flex justify-between"><Label>Blur Radius</Label><span className="font-mono">{current.blur}px</span></div>
+                            <Slider value={[current.blur]} onValueChange={([v]) => updateShadow('blur', v)} min={0} max={100} />
 
-                            <div className="flex justify-between"><Label>Spread Radius</Label><span className="font-mono">{spread}px</span></div>
-                            <Slider value={spread} onValueChange={setSpread} min={-50} max={50} />
+                            <div className="flex justify-between"><Label>Spread Radius</Label><span className="font-mono">{current.spread}px</span></div>
+                            <Slider value={[current.spread]} onValueChange={([v]) => updateShadow('spread', v)} min={-50} max={50} />
 
-                            <div className="flex justify-between"><Label>Opacity</Label><span className="font-mono">{opacity}</span></div>
-                            <Slider value={opacity} onValueChange={setOpacity} min={0} max={1} step={0.01} />
+                            <div className="flex justify-between"><Label>Opacity</Label><span className="font-mono">{current.opacity}</span></div>
+                            <Slider value={[current.opacity]} onValueChange={([v]) => updateShadow('opacity', v)} min={0} max={1} step={0.01} />
                         </div>
 
                         <div className="flex items-center justify-between">
                             <Label>Shadow Color</Label>
                             <div className="flex gap-2">
-                                <Input type="color" value={color} onChange={(e) => setColor(e.target.value)} className="w-12 p-1" />
-                                <Input value={color} onChange={(e) => setColor(e.target.value)} className="uppercase w-24" />
+                                <Input type="color" value={current.color} onChange={(e) => updateShadow('color', e.target.value)} className="w-12 p-1" />
+                                <Input value={current.color} onChange={(e) => updateShadow('color', e.target.value)} className="uppercase w-24" />
                             </div>
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <input type="checkbox" id="inset" checked={inset} onChange={(e) => setInset(e.target.checked)} className="h-4 w-4" />
+                            <input type="checkbox" id="inset" checked={current.inset} onChange={(e) => updateShadow('inset', e.target.checked)} className="h-4 w-4" />
                             <Label htmlFor="inset">Inset</Label>
                         </div>
                     </Card>
 
-                    <Card className="p-4 bg-muted/50 font-mono text-sm relative">
+                    <Card className="p-4 bg-muted/50 font-mono text-sm relative group">
                         <code className="block break-all pr-10">{cssCode}</code>
                         <Button
                             size="icon"
                             variant="ghost"
-                            className="absolute right-2 top-2 h-8 w-8"
+                            className="absolute right-2 top-2 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
                             onClick={() => navigator.clipboard.writeText(cssCode)}
                         >
                             <Copy className="h-4 w-4" />
@@ -87,7 +128,7 @@ export default function BoxShadowGeneratorPage() {
                 {/* Preview */}
                 <div className="flex items-center justify-center rounded-lg border bg-muted/20 min-h-[400px]">
                     <div
-                        className="h-48 w-48 rounded-lg bg-white dark:bg-slate-800 transition-all duration-200 flex items-center justify-center font-bold text-muted-foreground"
+                        className="h-48 w-48 rounded-xl bg-white dark:bg-slate-800 transition-all duration-200 flex items-center justify-center font-bold text-muted-foreground"
                         style={{ boxShadow: shadowValue }}
                     >
                         Preview

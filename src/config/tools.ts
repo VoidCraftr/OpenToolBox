@@ -20,10 +20,16 @@ import {
     Percent,
     Calendar,
     Scaling,
-    Calculator
+    Calculator,
+    CircleDollarSign,
+    Activity,
+    FileUp,
+    ShieldCheck,
+    MessageCircle,
+    TimerReset
 } from "lucide-react"
 
-export type ToolCategory = "developer" | "design" | "security" | "media" | "text" | "social" | "general" | "math"
+export type ToolCategory = "developer" | "design" | "security" | "media" | "text" | "social" | "general" | "math" | "finance" | "health" | "pdf"
 
 export interface ToolMetadata {
     slug: string
@@ -210,6 +216,66 @@ export const tools: ToolMetadata[] = [
         icon: Scaling,
         isNew: true,
     },
+
+    // --- Finance Tools ---
+    {
+        slug: "loan-calculator",
+        name: "Loan Calculator",
+        description: "Calculate monthly payments (EMI) and total interest for loans.",
+        category: "finance",
+        icon: CircleDollarSign,
+        isNew: true,
+    },
+
+    // --- Health Tools ---
+    {
+        slug: "bmi-calculator",
+        name: "BMI Calculator",
+        description: "Calculate Body Mass Index (BMI) and check weight categories.",
+        category: "health",
+        icon: Activity,
+        isNew: true,
+    },
+
+    // --- PDF Tools ---
+    {
+        slug: "image-to-pdf",
+        name: "Image to PDF",
+        description: "Convert JPG/PNG images to a single PDF document online.",
+        category: "pdf",
+        icon: FileUp,
+        isNew: true,
+    },
+
+    // --- Security Tools Additions ---
+    {
+        slug: "password-strength",
+        name: "Password Strength",
+        description: "Test how strong your password is and estimate crack time.",
+        category: "security",
+        icon: ShieldCheck,
+        isNew: true,
+    },
+
+    // --- Social Tools Additions ---
+    {
+        slug: "whatsapp-link",
+        name: "WhatsApp Link",
+        description: "Generate direct WhatsApp links with pre-filled messages.",
+        category: "social",
+        icon: MessageCircle,
+        isNew: true,
+    },
+
+    // --- Productivity/General ---
+    {
+        slug: "pomodoro-timer",
+        name: "Pomodoro Timer",
+        description: "Maximize focus with this customizable Pomodoro technique timer.",
+        category: "general",
+        icon: TimerReset,
+        isNew: true,
+    },
 ]
 
 export const categories: { id: ToolCategory; label: string; icon: LucideIcon }[] = [
@@ -220,5 +286,8 @@ export const categories: { id: ToolCategory; label: string; icon: LucideIcon }[]
     { id: "text", label: "Text", icon: Type },
     { id: "social", label: "Social", icon: Youtube },
     { id: "math", label: "Math", icon: Calculator },
+    { id: "finance", label: "Finance", icon: CircleDollarSign },
+    { id: "health", label: "Health", icon: Activity },
+    { id: "pdf", label: "PDF", icon: FileUp },
     { id: "general", label: "General", icon: RefreshCcw },
 ]

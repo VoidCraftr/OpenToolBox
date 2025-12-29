@@ -14,10 +14,16 @@ import {
     RefreshCcw,
     Binary,
     Clock,
-    LucideIcon
+    LucideIcon,
+    Youtube,
+    ALargeSmall,
+    Percent,
+    Calendar,
+    Scaling,
+    Calculator
 } from "lucide-react"
 
-export type ToolCategory = "developer" | "design" | "security" | "media" | "text" | "social" | "general"
+export type ToolCategory = "developer" | "design" | "security" | "media" | "text" | "social" | "general" | "math"
 
 export interface ToolMetadata {
     slug: string
@@ -159,6 +165,51 @@ export const tools: ToolMetadata[] = [
         icon: Timer,
         isNew: true,
     },
+    // --- Social Tools ---
+    {
+        slug: "youtube-thumbnail",
+        name: "YouTube Thumbnail",
+        description: "Download high-quality YouTube thumbnails and images.",
+        category: "social",
+        icon: Youtube,
+        isNew: true,
+    },
+
+    // --- Math Tools ---
+    {
+        slug: "percentage-calculator",
+        name: "Percentage Calculator",
+        description: "Calculate percentages, percentage increase/decrease, and more.",
+        category: "math",
+        icon: Percent,
+        isNew: true,
+    },
+
+    // --- New Consumer Tools ---
+    {
+        slug: "case-converter",
+        name: "Case Converter",
+        description: "Convert text between Uppercase, Lowercase, Title Case & more.",
+        category: "text",
+        icon: ALargeSmall,
+        isNew: true,
+    },
+    {
+        slug: "age-calculator",
+        name: "Age Calculator",
+        description: "Calculate your exact age in years, months, and days.",
+        category: "general",
+        icon: Calendar,
+        isNew: true,
+    },
+    {
+        slug: "image-resizer",
+        name: "Image Resizer",
+        description: "Resize images by pixel dimensions or percentage online.",
+        category: "media",
+        icon: Scaling,
+        isNew: true,
+    },
 ]
 
 export const categories: { id: ToolCategory; label: string; icon: LucideIcon }[] = [
@@ -167,5 +218,7 @@ export const categories: { id: ToolCategory; label: string; icon: LucideIcon }[]
     { id: "media", label: "Media", icon: FileImage },
     { id: "security", label: "Security", icon: Lock },
     { id: "text", label: "Text", icon: Type },
+    { id: "social", label: "Social", icon: Youtube },
+    { id: "math", label: "Math", icon: Calculator },
     { id: "general", label: "General", icon: RefreshCcw },
 ]

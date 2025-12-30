@@ -62,6 +62,14 @@ export const tools: ToolMetadata[] = [
         isNew: true,
     },
     {
+        slug: "css-flexbox-playground",
+        name: "CSS Flexbox Playground",
+        description: "Visual generator for CSS Flexbox layouts. Learn and build faster.",
+        category: "developer",
+        icon: BoxSelect,
+        isNew: true,
+    },
+    {
         slug: "jwt-decoder",
         name: "JWT Decoder",
         description: "Free Online JWT Decoder. Debug tokens securely in your browser.",
@@ -104,6 +112,14 @@ export const tools: ToolMetadata[] = [
         isPopular: true,
     },
     {
+        slug: "svg-to-png",
+        name: "SVG to PNG/JPG",
+        description: "Convert SVG vectors to high-quality PNG or JPG images.",
+        category: "media",
+        icon: FileImage,
+        isNew: true,
+    },
+    {
         slug: "box-shadow-generator",
         name: "Box Shadow Generator",
         description: "Free CSS Box Shadow Generator. Visual design tool for developers.",
@@ -137,6 +153,14 @@ export const tools: ToolMetadata[] = [
         description: "Free Online Word Counter & Character Count Tool.",
         category: "text",
         icon: Type,
+    },
+    {
+        slug: "markdown-editor",
+        name: "Markdown Editor",
+        description: "Write and preview Markdown with a split-pane interface.",
+        category: "text",
+        icon: Type,
+        isNew: true,
     },
     {
         slug: "diff-viewer",
@@ -276,6 +300,14 @@ export const tools: ToolMetadata[] = [
     },
 
     // --- Social Tools Additions ---
+    {
+        slug: "social-media-preview",
+        name: "Social Media Preview",
+        description: "Preview how your links look on Facebook, Twitter, LinkedIn & Google.",
+        category: "social",
+        icon: MessageCircle,
+        isNew: true,
+    },
     {
         slug: "whatsapp-link",
         name: "WhatsApp Link",

@@ -2,7 +2,7 @@
 
 ![OpenToolBox Banner](public/assets/OpenToolBox_Logo.png)
 
-> **The Ultimate Developer Toolbox.** A comprehensive collection of free, privacy-focused, and secure online tools.
+> **The Ultimate Developer Toolbox.** A comprehensive collection of free, privacy-focused, and secure online tools. [**Live Demo 🚀**](https://opentoolbox.online)
 
 ![License](https://img.shields.io/badge/License-AGPL_3.0-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-15.0-black)
@@ -110,6 +110,15 @@ We welcome contributions! If you have an idea for a new tool or an improvement:
 4.  Push to the branch: `git push origin feature/new-tool`.
 5.  Open a Pull Request.
 
+## 🌐 Connect
+
+[![Website](https://img.shields.io/badge/Website-voidcraftr.com-blue?style=for-the-badge&logo=google-chrome)](https://www.voidcraftr.com)
+[![Twitter](https://img.shields.io/badge/Twitter-%40Satyam__Agarwal__-1DA1F2?style=for-the-badge&logo=twitter)](https://twitter.com/Satyam_Agarwal_)
+[![GitHub](https://img.shields.io/badge/GitHub-VoidCraftr-181717?style=for-the-badge&logo=github)](https://github.com/voidcraftr)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-VoidCraftr-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/voidcraftr)
+[![Instagram](https://img.shields.io/badge/Instagram-%40voidcraftr-E4405F?style=for-the-badge&logo=instagram)](https://instagram.com/voidcraftr)
+[![Facebook](https://img.shields.io/badge/Facebook-VoidCraftr-1877F2?style=for-the-badge&logo=facebook)](https://facebook.com/voidcraftr)
+
 ## 📄 License
 
 This project is licensed under the **AGPL-3.0 License**. See the `LICENSE` file for details.
@@ -117,5 +126,5 @@ This project is licensed under the **AGPL-3.0 License**. See the `LICENSE` file 
 ---
 
 <p align="center">
-  Built with ❤️ by <a href="https://github.com/voidcraftr">VoidCraftr</a>
+  Built with ❤️ by <a href="https://www.voidcraftr.com">VoidCraftr</a>
 </p>

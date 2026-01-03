@@ -29,7 +29,9 @@ import {
     MessageCircle,
     TimerReset,
     Hash,
-    Twitter
+    Twitter,
+    Link,
+    Shuffle
 } from "lucide-react"
 
 export type ToolCategory = "developer" | "design" | "security" | "media" | "text" | "social" | "general" | "math" | "finance" | "health" | "pdf"
@@ -46,6 +48,23 @@ export interface ToolMetadata {
 }
 
 export const tools: ToolMetadata[] = [
+    {
+        slug: "base64-encoder",
+        name: "Base64 Encoder",
+        description: "Encode text to Base64 or decode Base64 strings securely.",
+        category: "developer",
+        icon: Binary,
+        isNew: true,
+    },
+    {
+        slug: "url-encoder",
+        name: "URL Encoder",
+        description: "Encode and decode URL-encoded text (percent-encoding).",
+        category: "developer",
+        icon: Link,
+        isNew: true,
+    },
+
     // --- Developer Tools ---
     {
         slug: "json-formatter",
@@ -173,6 +192,23 @@ export const tools: ToolMetadata[] = [
         isNew: true,
     },
 
+    {
+        slug: "lorem-ipsum-generator",
+        name: "Lorem Ipsum",
+        description: "Generate placeholder text: paragraphs, sentences, or words.",
+        category: "text",
+        icon: Type,
+        isNew: true,
+    },
+    {
+        slug: "text-to-handwriting",
+        name: "Text to Handwriting",
+        description: "Convert typed text into handwriting-style notes.",
+        category: "text",
+        icon: Pen,
+        isNew: true,
+    },
+
     // --- General/Consumer Tools ---
     {
         slug: "qr-code-generator",
@@ -196,6 +232,14 @@ export const tools: ToolMetadata[] = [
         description: "Free Online Stopwatch with Laps and Countdown Timer.",
         category: "general",
         icon: Timer,
+        isNew: true,
+    },
+    {
+        slug: "list-randomizer",
+        name: "List Randomizer",
+        description: "Randomize the order of items in a list or text file.",
+        category: "general",
+        icon: Shuffle,
         isNew: true,
     },
     // --- Social Tools ---
